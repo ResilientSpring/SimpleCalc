@@ -24,6 +24,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import static com.example.android.SimpleCalc.Calculator.Operator.ADD;
+
 /**
  * SimpleCalc is the initial version of SimpleCalcTest.  It has
  * a number of intentional oversights for the student to debug/fix,
@@ -60,7 +62,7 @@ public class MainActivity extends Activity {
      * OnClick method called when the add Button is pressed.
      */
     public void onAdd(View view) {
-        compute(Calculator.Operator.ADD);
+        compute(ADD);
     }
 
     /**
