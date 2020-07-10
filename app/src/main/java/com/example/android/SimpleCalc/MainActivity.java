@@ -58,6 +58,12 @@ public class MainActivity extends Activity {
         mOperandTwoEditText = findViewById(R.id.operand_two_edit_text);
     }
 
+    /* All of the defined android:onClick click handlers call the private compute() method,
+    with the operation name as one of the values from the Calculator.Operator enumeration.
+
+     Reference: https://codelabs.developers.google.com/codelabs/android-training-using-debugger/index.html?index=..%2F..android-training#2
+     */
+
     /**
      * OnClick method called when the add Button is pressed.
      */
@@ -91,11 +97,17 @@ public class MainActivity extends Activity {
         compute(Calculator.Operator.MUL);
     }
 
+    /*The compute() method calls the private method getOperand()
+    (which in turn calls getOperandText()) to retrieve the number values from the EditText elements.
+
+    Source: https://codelabs.developers.google.com/codelabs/android-training-using-debugger/index.html?index=..%2F..android-training#2
+    */
+
     private void compute(Calculator.Operator operator) {
         double operandOne;
         double operandTwo;
         try {
-            operandOne = getOperand(mOperandOneEditText);
+            operandOne = getOperand(mOperandOneEditText);  //Disabling a breakpoint enables you to temporarily "mute" that breakpoint without actually removing it from your code.
             operandTwo = getOperand(mOperandTwoEditText);
         } catch (NumberFormatException nfe) {
             Log.e(TAG, "NumberFormatException", nfe);
@@ -103,8 +115,11 @@ public class MainActivity extends Activity {
             return;
         }
 
+        /*The compute() method then uses a switch on the operand name
+        to call the appropriate method in the Calculator instance (mCalculator).*/
+
         String result;
-        switch (operator) {
+        switch (operator) {  //This second breakpoint is a conditional breakpoint. The execution of your app will only stop at this breakpoint if the test in the condition is true. In this case, the expression is only true if one or the other operands you entered is 42. You can enter any Java expression as a condition as long as it returns a boolean.
             case ADD:
                 result = String.valueOf(
                         mCalculator.add(operandOne, operandTwo));
@@ -125,6 +140,8 @@ public class MainActivity extends Activity {
                 result = getString(R.string.computationError);
                 break;
         }
+
+        //The last part of the compute() method updates the TextView with the result of the calculation.
         mResultTextView.setText(result);
     }
 
